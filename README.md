@@ -1,7 +1,9 @@
 # Steba Humidifier ESPHome Integration
 
-Control and monitor your Steba LB7using an ESP32‑C3 Supermini microcontroller.
-This project emulates button presses via GPIO and sniffs the TM1628 display controller to read real‑time device status (temperature, humidity, power state, heating, ionization, water level).
+[![Buy Me A Coffee](https://img.shields.io/badge/donate-Coffee-ff813f.svg)](https://www.buymeacoffee.com/barma)
+
+Control and monitor your Steba LB7 using an ESP32-C3 Supermini microcontroller.
+This project emulates button presses via GPIO and sniffs the TM1628 display controller to read real-time device status (temperature, humidity, power state, heating, ionization, water level).
 It is designed for seamless integration with Home Assistant via ESPHome API.
 
 ---
@@ -11,15 +13,15 @@ It is designed for seamless integration with Home Assistant via ESPHome API.
 - **Hardware Button Emulation**
   Trigger Power, Ionization, Heating, and Intensity controls via short GPIO pulses (0.15s duration).
 - **Display Sniffing (TM1628)**
-  Real‑time reading of:
+  Real-time reading of:
   - Temperature
   - Humidity
   - Binary states: Power, Heating, Ionization, "No Water".
 - **Home Assistant Integration**
-  - Auto‑discovery via ESPHome API
+  - Auto-discovery via ESPHome API
   - Encrypted API communication
   - OTA firmware updates
-  - Built‑in web dashboard
+  - Built-in web dashboard
 - **Stable Monitoring**
   - Sensor filters (delta / throttle)
   - Debouncing for binary sensors
@@ -33,7 +35,7 @@ It is designed for seamless integration with Home Assistant via ESPHome API.
 ### Required Components
 
 - **Steba Humidifier LB7**
-- **ESP32‑C3 Supermini**
+- **ESP32-C3 Supermini**
   (board: `esp32-c3-devkitm-1` or compatible)
 - **SN74AHCT125N Quadruple Bus Buffer Gates**
 - 4 x **4N38 DIP-6 Optocoupler**
@@ -44,7 +46,7 @@ It is designed for seamless integration with Home Assistant via ESPHome API.
 ### Wiring Overview
 
 - **Button emulation (outputs)**
-  Connect GPIOs to the humidifier's front‑panel button pads (through transistors or optocouplers if needed):
+  Connect GPIOs to the humidifier's front-panel button pads (through transistors or optocouplers if needed):
 
   - `GPIO04` → Power button
   - `GPIO03` → Ionization button
@@ -65,16 +67,16 @@ It is designed for seamless integration with Home Assistant via ESPHome API.
 
 ---
 
-## Step‑by‑Step: First Flash of ESP32‑C3 Supermini via Home Assistant
+## Step-by-Step: First Flash of ESP32-C3 Supermini via Home Assistant
 
 This section describes flashing using the **Home Assistant ESPHome Dashboard** (easiest for HA users).
 
 ### 1. Prerequisites
 
-- **Home Assistant** instance with **ESPHome add‑on** installed
-  - Settings → Add‑ons → ESPHome (or install from official add‑ons repository)
-- **ESP32‑C3 Supermini** board (new, never flashed)
-- **USB cable** (data cable, not power‑only)
+- **Home Assistant** instance with **ESPHome add-on** installed
+  - Settings → Add-ons → ESPHome (or install from official add-ons repository)
+- **ESP32-C3 Supermini** board (new, never flashed)
+- **USB cable** (data cable, not power-only)
 - USB drivers installed (optional):
   - **macOS**: <https://github.com/WCHSoftGroup/ch34xser_macos>
   - **Windows**: <https://www.wch.cn/downloads/CH341SER_EXE.html>
@@ -114,7 +116,7 @@ steba_humidifier: "API_Password_from_new_created_steba-humidifier.yaml"
 ### 3. Access ESPHome Dashboard in Home Assistant
 
 1. In Home Assistant, go to:
-   **Settings → Add‑ons → ESPHome**
+   **Settings → Add-ons → ESPHome**
 2. Click the **"Open Web UI"** button (or navigate to `http://<HA_IP>:6052`)
 3. You should see the ESPHome dashboard with a list of managed devices (empty at first).
 
@@ -149,9 +151,9 @@ Alternatively, if you're familiar with HA file structure, place `steba-humidifie
 
 Then refresh the ESPHome dashboard.
 
-### 6. Connect ESP32‑C3 via USB
+### 6. Connect ESP32-C3 via USB
 
-1. Plug the ESP32‑C3 Supermini into your Home Assistant host (or any USB port connected to HA) via USB cable.
+1. Plug the ESP32-C3 Supermini into your Home Assistant host (or any USB port connected to HA) via USB cable.
 2. If needed, put the board into **download mode**:
    - Hold **BOOT** button
    - Press and release **RESET** button
@@ -162,7 +164,7 @@ Then refresh the ESPHome dashboard.
 
 1. In the ESPHome dashboard, click the **"Install"** button (or **three dots → Install**) next to `steba-humidifier`.
 2. A menu appears with options:
-   - **"Wirelessly"** (for already‑flashed devices)
+   - **"Wirelessly"** (for already-flashed devices)
    - **"USB"** (for first flash or bricked boards)
 3. Click **"USB"**.
 4. ESPHome will:
@@ -172,7 +174,7 @@ Then refresh the ESPHome dashboard.
    - Flash the firmware
 5. Wait for completion (2–5 minutes).
 
-**If port not auto‑detected:**
+**If port not auto-detected:**
 - Click **"Manual download"** to get the binary file
 - Use esphome CLI on a different machine:
 
@@ -191,23 +193,23 @@ Then refresh the ESPHome dashboard.
    [xx:xx:xx][I][api:136]: API Server started on port 6053
    ```
 
-3. If Wi‑Fi fails to connect, the device starts a fallback AP:
+3. If Wi-Fi fails to connect, the device starts a fallback AP:
    - SSID: `steba-humidifier`
    - Password: (from `fallback_ap_password` in `secrets.yaml`)
-   - Connect to it via your phone/laptop and reconfigure Wi‑Fi
+   - Connect to it via your phone/laptop and reconfigure Wi-Fi
 
 ### 9. Device Should Now Appear Online
 
 Back in the ESPHome dashboard:
 
 - The `steba-humidifier` device should show **"Status: Online"** (green indicator)
-- If offline, check Wi‑Fi connection or restart the device
+- If offline, check Wi-Fi connection or restart the device
 
 ---
 
 ## Alternative: CLI Method (Command Line)
 
-If you prefer command‑line flashing or if Home Assistant ESPHome dashboard doesn't work:
+If you prefer command-line flashing or if Home Assistant ESPHome dashboard doesn't work:
 
 ### Option A: Direct CLI Flashing
 
@@ -301,7 +303,7 @@ entities:
 
 ## Subsequent Updates (OTA)
 
-Once the first USB flash is done, you can update firmware over Wi‑Fi:
+Once the first USB flash is done, you can update firmware over Wi-Fi:
 
 1. **Via ESPHome Dashboard**: Click **"Install"** → **"Wirelessly"**.
 2. **Via CLI**: `esphome run steba-humidifier.yaml` will detect the device and upload OTA.
@@ -312,7 +314,7 @@ ESPHome will:
 2. Upload it via OTA to the device (no USB required).
 3. Reboot the device with the new firmware.
 
-If OTA fails, you can always re‑flash over USB with the steps from the "First Flash" section.
+If OTA fails, you can always re-flash over USB with the steps from the "First Flash" section.
 
 ---
 
@@ -341,11 +343,11 @@ substitutions:
   dio_gpio: 7
 ```
 
-To use different pins, change these values and re‑flash.
+To use different pins, change these values and re-flash.
 
 ### Button Outputs
 
-Buttons are implemented as ESPHome `output`‑based buttons:
+Buttons are implemented as ESPHome `output`-based buttons:
 
 ```yaml
 button:
@@ -433,7 +435,7 @@ binary_sensor:
 
 | Problem                              | Possible Fix                                                                 |
 |--------------------------------------|------------------------------------------------------------------------------|
-| Board not detected as serial port    | Re‑plug USB, change cable/port, install CH340 driver                        |
+| Board not detected as serial port    | Re-plug USB, change cable/port, install CH340 driver                        |
 | "Timed out waiting for packet header"| Enter download mode (BOOT+RESET), use `--chip esp32c3`                      |
 | "Failed to open serial port"         | Close other apps using the port (Arduino IDE, serial monitor, etc.)        |
 
@@ -441,9 +443,9 @@ binary_sensor:
 
 | Problem                      | Possible Fix                                                                 |
 |-----------------------------|------------------------------------------------------------------------------|
-| No TM1628 data / 0 values   | Check wiring of STB/CLK/DIO, pull‑ups, shared ground, check logs            |
-| Buttons do nothing          | Verify button‑pad connections, increase pulse `duration`, test GPIO outputs |
-| Wi‑Fi not connecting        | Recheck `wifi_ssid` / `wifi_password`, use fallback AP to reconfigure       |
+| No TM1628 data / 0 values   | Check wiring of STB/CLK/DIO, pull-ups, shared ground, check logs            |
+| Buttons do nothing          | Verify button-pad connections, increase pulse `duration`, test GPIO outputs |
+| Wi-Fi not connecting        | Recheck `wifi_ssid` / `wifi_password`, use fallback AP to reconfigure       |
 | Unstable readings           | Increase `delta` and `throttle` filters, reduce log level from `DEBUG`      |
 
 View live logs:
@@ -495,11 +497,17 @@ See the [`LICENSE`](LICENSE) file for details.
 ### Safety Disclaimer
 
 > **⚠ WARNING**
-> Modifying mains‑powered appliances is inherently dangerous and will void the manufacturer's warranty.
+> Modifying mains-powered appliances is inherently dangerous and will void the manufacturer's warranty.
 
 - Always disconnect the humidifier from mains power before working on it.
 - Ensure proper insulation and strain relief for all wires.
 - Avoid exposing electronics to moisture or water.
-- Double‑check polarity and voltage compatibility before powering on.
+- Double-check polarity and voltage compatibility before powering on.
 
 Use this project **at your own risk**.
+
+---
+
+**💡 Tip:** If you like this project just buy me a cup of ☕️ or 🥤:
+
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/white_img.png)](https://www.buymeacoffee.com/barma)
